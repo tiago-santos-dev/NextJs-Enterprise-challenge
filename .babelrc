@@ -16,6 +16,7 @@
           "@screens": "./src/screens",
           "@hooks": "./src/hooks",
           "@services": "./src/services",
+          "@styles": "./src/styles",
           "@constants": "./src/constants",
           "@context": "./src/context",
           "@queries": "./src/queries",

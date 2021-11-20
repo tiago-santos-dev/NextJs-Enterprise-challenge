@@ -1,4 +1,14 @@
+import Head from 'next/head'
+
 const Home = function () {
-  return <h1>Nextjs Challenge </h1>
+  return (
+    <>
+      <Head>
+        <title>Desafio NextJs</title>
+      </Head>
+      <h1>Desafio NextJs</h1>
+    </>
+  )
 }
+
 export default Home

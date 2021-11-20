@@ -38,6 +38,9 @@
       "@services/*": [
         "./src/services/*"
       ],
+      "@styles/*": [
+        "./src/styles/*"
+      ],
       "@constants": [
         "./src/constants.ts"
       ],
@@ -68,7 +71,8 @@
       "@assets/*": [
         "./src/assets/*"
       ]
-    }
+    },
+    "incremental": true
   },
   "exclude": [
     "node_modules"
