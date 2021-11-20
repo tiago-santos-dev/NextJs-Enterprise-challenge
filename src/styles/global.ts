@@ -29,7 +29,7 @@ export default createGlobalStyle`
   }
 
   body {
-    background: var(---gray-50);
+    background: var(--gray-50);
     color: var(--gray-900)
   }
 
