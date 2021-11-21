@@ -1,4 +1,5 @@
 import Button from '@components/UI/Button'
+import { FiPlus } from 'react-icons/fi'
 import { Container, Content, Text } from './styles'
 
 const Header = function () {
@@ -6,7 +7,7 @@ const Header = function () {
     <Container>
       <Content>
         <Text> Empreendimentos</Text>
-        <Button text="Adicionar" />
+        <Button text="Adicionar" icon={FiPlus} />
       </Content>
     </Container>
   )

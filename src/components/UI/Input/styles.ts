@@ -9,8 +9,11 @@ export const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
 
+  svg {
+    margin-right: 1rem;
+  }
   input {
-    margin-left: 1rem;
+    font-weight: 400;
   }
 `
 

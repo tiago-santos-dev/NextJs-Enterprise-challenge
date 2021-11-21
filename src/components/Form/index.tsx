@@ -13,17 +13,17 @@ const Form = function () {
     <Container>
       <InputsContainer>
         <Title>Informações</Title>
-        <Input />
-        <Input />
-        <Input />
-        <Input />
+        <Input name="type" />
+        <Input name="type" placeholder="Nome" />
+        <Input name="type" />
+        <Input name="type" placeholder="CEP" />
         <AdressContainer>
           <AdressText>Rua Doutor Messuti</AdressText>
           <AdressText>Vila Bastos</AdressText>
           <AdressText>Santo André</AdressText>
           <AdressText>SP</AdressText>
         </AdressContainer>
-        <Input />
+        <Input name="number" placeholder="Número" />
       </InputsContainer>
       <Button text="Cadastrar" />
     </Container>

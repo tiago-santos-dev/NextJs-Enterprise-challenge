@@ -27,6 +27,12 @@
           "@public": "./public"
         }
       }
+    ],
+    [
+      "styled-components",
+      {
+        "ssr": true
+      }
     ]
   ]
 }

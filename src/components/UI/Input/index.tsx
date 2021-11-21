@@ -1,11 +1,17 @@
-import { FiSearch } from 'react-icons/fi'
+import { InputHTMLAttributes } from 'react'
+import { IconBaseProps } from 'react-icons/lib'
 import { Container, Input as CustomInput } from './styles'
 
-const Input = function () {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  name: string
+  icon?: React.ComponentType<IconBaseProps>
+}
+
+const Input: React.FC<InputProps> = function ({ icon: Icon, ...rest }) {
   return (
     <Container>
-      <FiSearch />
-      <CustomInput placeholder="Buscar" />
+      {Icon && <Icon />}
+      <CustomInput {...rest} />
     </Container>
   )
 }

@@ -1,14 +1,17 @@
-import { FiPlus } from 'react-icons/fi'
+import { InputHTMLAttributes } from 'react'
+import { IconBaseProps } from 'react-icons/lib'
 import { Container } from './styles'
 
-interface ButtonProps {
+interface ButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   text: string
+  icon?: React.ComponentType<IconBaseProps>
 }
-const Button = function ({ text }: ButtonProps) {
+
+const Button: React.FC<ButtonProps> = function ({ text, icon: Icon, ...rest }) {
   return (
-    <Container>
+    <Container {...rest}>
       {text}
-      <FiPlus />
+      {Icon && <Icon />}
     </Container>
   )
 }
