@@ -30,6 +30,7 @@
   "rules": {
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
+    "no-shadow": "off",
     "func-names": [
       "error",
       "never"
@@ -47,6 +48,12 @@
     "react/prop-types": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "import/prefer-default-export": "off",
+    "camelcase": [
+      0,
+      {
+        "properties": "never"
+      }
+    ],
     "react/jsx-props-no-spreading": [
       "error",
       {
