@@ -1,4 +1,4 @@
-import Button from '@components/Button'
+import Button from '@components/UI/Button'
 import { Container, Content, Text } from './styles'
 
 const Header = function () {
@@ -6,7 +6,7 @@ const Header = function () {
     <Container>
       <Content>
         <Text> Empreendimentos</Text>
-        <Button />
+        <Button text="Adicionar" />
       </Content>
     </Container>
   )

@@ -1,10 +1,13 @@
 import { FiPlus } from 'react-icons/fi'
 import { Container } from './styles'
 
-const Button = function () {
+interface ButtonProps {
+  text: string
+}
+const Button = function ({ text }: ButtonProps) {
   return (
     <Container>
-      Adicionar
+      {text}
       <FiPlus />
     </Container>
   )
