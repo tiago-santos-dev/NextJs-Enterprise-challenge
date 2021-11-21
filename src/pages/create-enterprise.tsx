@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Container, Content } from '@styles/pages'
+import { Container, Content } from '@styles/pages/enterprise'
 import Form from '@components/Form'
 
 const CreateEnterprise = function () {
