@@ -17,7 +17,27 @@ export const Content = styled.div`
 
   color: var(--purple-500);
 `
+export const LeftContent = styled.div`
+  max-width: 60%;
+  display: flex;
+  justify-content: flex-start;
+`
+export const RightContent = styled.div`
+  max-width: 40%;
+  display: flex;
+  justify-content: flex-end;
+`
+export const BackButton = styled.button`
+  color: var(--purple-500);
+  background: transparent;
+  border: 0;
 
-export const Text = styled.p`
+  margin-right: 1rem;
+
+  display: flex;
+  align-items: center;
+`
+
+export const Title = styled.p`
   font: 700 1.2rem 'Montserrat';
 `

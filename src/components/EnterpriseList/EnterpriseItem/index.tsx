@@ -1,4 +1,5 @@
 import Tag from '@components/UI/Tag'
+import router from 'next/router'
 import { FiEdit2, FiTrash } from 'react-icons/fi'
 import {
   Container,
@@ -18,7 +19,7 @@ const EnterpriseItem = function () {
         <Content>
           <EnterpriseName>Villega Vila Velha</EnterpriseName>
           <ActionButtonsContainer>
-            <Button>
+            <Button onClick={() => router.push('/edit-enterprise')}>
               <FiEdit2 />
             </Button>
             <Button>
