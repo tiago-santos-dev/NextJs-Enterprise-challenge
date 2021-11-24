@@ -8,7 +8,7 @@ import {
   Title,
 } from './styles'
 
-const Form = function () {
+const Form: React.FC = function () {
   return (
     <Container>
       <InputsContainer>

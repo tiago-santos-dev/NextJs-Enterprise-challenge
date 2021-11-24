@@ -1,4 +1,5 @@
 import Tag from '@components/UI/Tag'
+import { Enterprise } from '@typeDefs/index'
 import router from 'next/router'
 import { FiEdit2, FiTrash } from 'react-icons/fi'
 import {
@@ -12,12 +13,17 @@ import {
   Button,
 } from './styles'
 
-const EnterpriseItem = function () {
+interface EnterpriseItemProps {
+  enterpriseItem: Enterprise
+}
+const EnterpriseItem: React.FC<EnterpriseItemProps> = function ({
+  enterpriseItem,
+}) {
   return (
     <Container>
       <EnterpriseDetailsContainer>
         <Content>
-          <EnterpriseName>Villega Vila Velha</EnterpriseName>
+          <EnterpriseName>{enterpriseItem.name}</EnterpriseName>
           <ActionButtonsContainer>
             <Button onClick={() => router.push('/edit-enterprise')}>
               <FiEdit2 />
@@ -28,12 +34,16 @@ const EnterpriseItem = function () {
           </ActionButtonsContainer>
         </Content>
         <EnterpriseAdress>
-          Rua Dório Silva, 100 - Vila Guaranhuns, Vila Velha
+          {`${enterpriseItem.address.street},
+            ${enterpriseItem.address.number} -
+            ${enterpriseItem.address.district},
+            ${enterpriseItem.address.city}
+          `}
         </EnterpriseAdress>
       </EnterpriseDetailsContainer>
       <TagsContainer>
-        <Tag text="Lançamento" />
-        <Tag text="Residencial" />
+        <Tag text={enterpriseItem.status.toString()} />
+        <Tag text={enterpriseItem.purpose.toString()} />
       </TagsContainer>
     </Container>
   )

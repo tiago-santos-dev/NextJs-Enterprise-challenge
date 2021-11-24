@@ -10,7 +10,7 @@ import {
   Title,
 } from './styles'
 
-const Header = function () {
+const Header: React.FC = function () {
   const router = useRouter()
 
   const getCurrentHeaderTitle = () => {

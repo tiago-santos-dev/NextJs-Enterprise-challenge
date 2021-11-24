@@ -1,17 +1,17 @@
 import Button from '@components/UI/Button'
-// import { useEnterprises } from '@hooks/useEnterprise'
+import { useEnterprises } from '@hooks/useEnterprise'
 import EnterpriseItem from './EnterpriseItem'
 import { Container } from './styles'
 
-const EnterpriseList = function () {
-  // const { allEnterprises } = useEnterprises()
-  // console.log("All Enterprises", allEnterprises)
+const EnterpriseList: React.FC = function () {
+  const { allEnterprises } = useEnterprises()
+
   return (
     <Container>
-      <EnterpriseItem />
-      <EnterpriseItem />
-      <EnterpriseItem />
-      <EnterpriseItem />
+      {allEnterprises.map((item) => (
+        <EnterpriseItem key={item.id} enterpriseItem={item} />
+      ))}
+
       <Button text="Carregar mais" />
     </Container>
   )

@@ -31,6 +31,7 @@
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "no-shadow": "off",
+    "no-var": 0,
     "func-names": [
       "error",
       "never"
@@ -46,7 +47,6 @@
     ],
     "import/extensions": "off",
     "react/prop-types": "off",
-    "jsx-a11y/anchor-is-valid": "off",
     "import/prefer-default-export": "off",
     "camelcase": [
       0,
@@ -60,6 +60,8 @@
         "custom": "ignore"
       }
     ],
+    "no-use-before-define": "off",
+    "import/no-mutable-exports": "off",
     "prettier/prettier": "error",
     "react/no-unescaped-entities": "off",
     "import/no-cycle": [
@@ -68,7 +70,6 @@
         "ignoreExternal": true
       }
     ],
-    "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": [
       "error",
       {

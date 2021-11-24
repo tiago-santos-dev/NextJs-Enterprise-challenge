@@ -4,7 +4,7 @@ import GlobalStyle from '@styles/global'
 import Header from '@components/Header'
 import { EnterpriseProvider } from '@hooks/useEnterprise'
 
-const MyApp = function ({ Component, pageProps }: AppProps) {
+const MyApp: React.FC<AppProps> = function ({ Component, pageProps }) {
   return (
     <EnterpriseProvider>
       <GlobalStyle />

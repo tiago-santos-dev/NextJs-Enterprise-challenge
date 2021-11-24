@@ -19,12 +19,10 @@ interface Adress {
   cep: string
 }
 export interface Enterprise {
-  _id: string
+  id: string
   name: string
   status: StatusEnum
   purpose: PorposeEnum
-  ri_number: number
+  riNumber: string
   address: Adress
 }
-
-export type EnterpriseInput = Omit<Enterprise, 'id'>

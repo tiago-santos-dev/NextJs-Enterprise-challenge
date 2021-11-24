@@ -1,17 +1,15 @@
-import { EnterpriseService } from '@services/enterprises'
-// import { EnterpriseInput } from '@typeDefs/index'
-import { Enterprise } from '@typeDefs/index'
 import React, {
   createContext,
   ReactNode,
   useEffect,
   useState,
-  useContext,
-  useCallback
+  useContext
 } from 'react'
+import GenericModal from '@components/UI/Modal/Generic'
+import { EnterpriseService } from '@services/enterprises'
+import { Enterprise } from '@typeDefs/index'
 
-// import Swal from 'sweetalert2'
-
+import Swal from 'sweetalert2'
 interface EnterpriseProviderProps {
   children: ReactNode
 }
@@ -20,140 +18,133 @@ interface EnterpriseContextData {
   allEnterprises: Enterprise[]
   enterpriseToBeEdited: Enterprise
   handleSetEnterpriseToBeEdited: (enterprise: Enterprise) => void
-  // handleCreateEnterprise: (enterprise: EnterpriseInput) => Promise<void>
-  // handleUpdateEnterprise: (enterprise: Enterprise) => Promise<void>
-  // handleDeleteEnterprise: (id: string) => Promise<void>
+  handleCreateEnterprise: (enterprise: Enterprise) => Promise<void>
+  handleUpdateEnterprise: (enterprise: Enterprise) => Promise<void>
+  handleDeleteEnterprise: (id: string) => Promise<void>
 }
 
 export const EnterprisesContext = createContext<EnterpriseContextData>(
   {} as EnterpriseContextData
 )
 
-export function EnterpriseProvider ({ children }: EnterpriseProviderProps) {
+export const EnterpriseProvider: React.FC<EnterpriseProviderProps> = ({ children }) => {
   const [allEnterprises, setAllEnterprises] = useState<Enterprise[]>([])
   const [enterpriseToBeEdited, setEnterpriseToBeEdited] = useState<Enterprise>()
   const [loading, setLoading] = useState(false)
-
 
   const handleSetEnterpriseToBeEdited = (enterprise: Enterprise) => {
     setEnterpriseToBeEdited(enterprise);
   }
 
-  const getEnterprises = useCallback(async () => {
+  const getEnterprises = async () => {
     setLoading(true)
     const EnterprisesResponse = await EnterpriseService.getAllEnterprises()
     setAllEnterprises(EnterprisesResponse)
     setLoading(false)
-  }, [])
+  }
 
   useEffect(() => {
     getEnterprises()
-  }, [getEnterprises])
+  }, [])
 
-  // async function handleCreateEnterprise (enterprisesInput: EnterpriseInput) {
-  //   try {
-  //     await EnterpriseService.createEnterprise(enterprisesInput);
-  //     setAllEnterprises([...allEnterprises, enterprisesInput]);
+  const handleCreateEnterprise = async (enterprisesInput: Enterprise) => {
+    try {
+      await EnterpriseService.createEnterprise(enterprisesInput);
+      setAllEnterprises([...allEnterprises, enterprisesInput]);
 
-  //     Swal.fire({
-  //       title: 'Pronto',
-  //       text: 'Empreendimento criado com sucesso!',
-  //       icon: 'success',
-  //       confirmButtonText: 'Ok',
-  //       confirmButtonColor: '#257DB4'
-  //     })
-  //   } catch (error) {
-  //     Swal.fire({
-  //       title: 'Erro',
-  //       text: 'Não foi possível concluir essa ação, tente novamente!',
-  //       icon: 'error',
-  //       confirmButtonText: 'Ok',
-  //       confirmButtonColor: '#257DB4'
-  //     })
-  //   }
-  // }
+      <GenericModal
+        customText='Empreendimento criado com sucesso!'
+        customIcon='success'
+      />
+    } catch {
 
-  // async function handleUpdateEnterprise (updatedEnterprise: Enterprise) {
-  //   try {
-  //     await EnterpriseService.updateEnterprise(updatedEnterprise)
+      <GenericModal
+        customTitle='Erro'
+        customText='Não foi possível concluir essa ação, tente novamente!'
+        customIcon='error'
+      />
+    }
+  }
 
-  //     const updatedEnterprises = allEnterprises.map(enterprise => {
-  //       if (enterprise._id === updatedEnterprise._id) {
-  //         return updatedEnterprise
-  //       }
-  //       return enterprise;
-  //     })
+  const handleUpdateEnterprise = async (updatedEnterprise: Enterprise) => {
+    try {
+      await EnterpriseService.updateEnterprise(updatedEnterprise);
 
-  //     setAllEnterprises(updatedEnterprises)
+      const updatedEnterprises = allEnterprises.map(enterprise => {
+        if (enterprise.id === updatedEnterprise.id) {
+          return updatedEnterprise
+        }
+        return enterprise;
+      })
 
-  //     Swal.fire({
-  //       title: 'Pronto',
-  //       text: 'Suas alterações foram salvas com sucesso!',
-  //       icon: 'success',
-  //       confirmButtonText: 'Ok',
-  //       confirmButtonColor: '#257DB4'
-  //     })
-  //   } catch (error) {
-  //     Swal.fire({
-  //       title: 'Erro',
-  //       text: 'Suas alterações não foram salvas, tente novamente!',
-  //       icon: 'error',
-  //       confirmButtonText: 'Ok',
-  //       confirmButtonColor: '#257DB4'
-  //     })
-  //   }
-  // }
+      setAllEnterprises(updatedEnterprises);
 
-  // async function handleDeleteEnterprise (id: string) {
-  //   const swalWithBootstrapButtons = Swal.mixin({
-  //     customClass: {
-  //       confirmButton: 'btn btn-success',
-  //       cancelButton: 'btn btn-danger'
-  //     },
-  //     buttonsStyling: true
-  //   })
+      <GenericModal
+        customText='Suas alterações foram salvas com sucesso!'
+        customIcon='success'
+      />
 
-  //   swalWithBootstrapButtons
-  //     .fire({
-  //       title: 'Excluir esse Empreendimento?',
-  //       text: 'Esta ação não pode ser desfeita.',
-  //       icon: 'warning',
-  //       showCancelButton: true,
-  //       confirmButtonText: 'Excluir',
-  //       cancelButtonText: 'Cancelar',
-  //       reverseButtons: true
-  //     })
-  //     .then((result) => {
-  //       if (result.isConfirmed) {
-  //         EnterpriseService.deleteEnterprise(id)
-  //           .then(() => {
-  //             const updatedEnterprises = allEnterprises.filter((enterprise) => {
-  //               if (enterprise._id !== id) {
-  //                 return enterprise
-  //               }
-  //             })
-  //             setAllEnterprises(updatedEnterprises)
+    } catch {
 
-  //             swalWithBootstrapButtons.fire(
-  //               'Pronto!',
-  //               'Empreendimento excluido com sucesso!',
-  //               'success'
-  //             )
-  //           })
-  //           .catch(() => {
-  //             Swal.fire({
-  //               title: 'Erro',
-  //               text: 'Suas alterações não foram salvas, tente novamente!',
-  //               icon: 'error',
-  //               confirmButtonText: 'Ok',
-  //               confirmButtonColor: '#257DB4'
-  //             })
-  //           })
-  //       } else if (result.dismiss === Swal.DismissReason.cancel) {
-  //         swalWithBootstrapButtons.fire('Cancelado!')
-  //       }
-  // })
-  // }
+      <GenericModal
+        customTitle='Erro'
+        customText='Suas alterações não foram salvas, tente novamente!'
+        customIcon='error'
+      />
+
+    }
+  }
+
+  const handleDeleteEnterprise = async (id: string): Promise<void> => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: true
+    })
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'Excluir esse Empreendimento?',
+        text: 'Esta ação não pode ser desfeita.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Excluir',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+      })
+      .then(result => {
+        if (result.isConfirmed) {
+          EnterpriseService.deleteEnterprise(id)
+            .then(() => {
+              const updatedEnterprises = allEnterprises.filter((enterprise) => {
+                if (enterprise.id !== id) {
+                  return enterprise
+                }
+              })
+              setAllEnterprises(updatedEnterprises);
+
+              < GenericModal
+                customText='Empreendimento excluido com sucesso!'
+                customIcon='success'
+              />
+
+            })
+            .catch(() => {
+              <GenericModal
+                customTitle='Erro'
+                customText='Suas alterações não foram salvas, tente novamente!'
+                customIcon='error'
+              />
+            })
+
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire('Cancelado!')
+        }
+        return
+      })
+  }
 
   return (
     <EnterprisesContext.Provider
@@ -162,9 +153,9 @@ export function EnterpriseProvider ({ children }: EnterpriseProviderProps) {
         allEnterprises,
         enterpriseToBeEdited,
         handleSetEnterpriseToBeEdited,
-        // handleCreateEnterprise,
-        // handleDeleteEnterprise,
-        // handleUpdateEnterprise
+        handleCreateEnterprise,
+        handleDeleteEnterprise,
+        handleUpdateEnterprise
       }}
     >
       {children}
