@@ -31,6 +31,10 @@
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "no-shadow": "off",
+    "vars-on-top": "off",
+    "array-callback-return": "off",
+    "consistent-return": "off",
+    "react/jsx-no-constructed-context-values": "off",
     "no-var": 0,
     "func-names": [
       "error",

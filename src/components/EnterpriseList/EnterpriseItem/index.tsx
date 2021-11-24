@@ -1,4 +1,5 @@
 import Tag from '@components/UI/Tag'
+import { useEnterprises } from '@hooks/useEnterprise'
 import { Enterprise } from '@typeDefs/index'
 import router from 'next/router'
 import { FiEdit2, FiTrash } from 'react-icons/fi'
@@ -19,6 +20,8 @@ interface EnterpriseItemProps {
 const EnterpriseItem: React.FC<EnterpriseItemProps> = function ({
   enterpriseItem,
 }) {
+  const { handleDeleteEnterprise } = useEnterprises()
+
   return (
     <Container>
       <EnterpriseDetailsContainer>
@@ -28,7 +31,7 @@ const EnterpriseItem: React.FC<EnterpriseItemProps> = function ({
             <Button onClick={() => router.push('/edit-enterprise')}>
               <FiEdit2 />
             </Button>
-            <Button>
+            <Button onClick={() => handleDeleteEnterprise(enterpriseItem.id)}>
               <FiTrash />
             </Button>
           </ActionButtonsContainer>

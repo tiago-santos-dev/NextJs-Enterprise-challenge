@@ -3,13 +3,13 @@ import React, {
   ReactNode,
   useEffect,
   useState,
-  useContext
+  useContext,
 } from 'react'
-import GenericModal from '@components/UI/Modal/Generic'
 import { EnterpriseService } from '@services/enterprises'
 import { Enterprise } from '@typeDefs/index'
 
 import Swal from 'sweetalert2'
+
 interface EnterpriseProviderProps {
   children: ReactNode
 }
@@ -27,13 +27,28 @@ export const EnterprisesContext = createContext<EnterpriseContextData>(
   {} as EnterpriseContextData
 )
 
-export const EnterpriseProvider: React.FC<EnterpriseProviderProps> = ({ children }) => {
+export var EnterpriseProvider: React.FC<EnterpriseProviderProps> = function ({
+  children,
+}) {
   const [allEnterprises, setAllEnterprises] = useState<Enterprise[]>([])
   const [enterpriseToBeEdited, setEnterpriseToBeEdited] = useState<Enterprise>()
   const [loading, setLoading] = useState(false)
 
+  const GenericModal = ({
+    customIcon,
+    customText = ' ',
+    customTitle = 'Pronto',
+  }) =>
+    Swal.fire({
+      title: customTitle,
+      text: customText,
+      icon: customIcon,
+      confirmButtonText: 'Ok',
+      confirmButtonColor: ' #4F46BB',
+    })
+
   const handleSetEnterpriseToBeEdited = (enterprise: Enterprise) => {
-    setEnterpriseToBeEdited(enterprise);
+    setEnterpriseToBeEdited(enterprise)
   }
 
   const getEnterprises = async () => {
@@ -49,49 +64,44 @@ export const EnterpriseProvider: React.FC<EnterpriseProviderProps> = ({ children
 
   const handleCreateEnterprise = async (enterprisesInput: Enterprise) => {
     try {
-      await EnterpriseService.createEnterprise(enterprisesInput);
-      setAllEnterprises([...allEnterprises, enterprisesInput]);
-
-      <GenericModal
-        customText='Empreendimento criado com sucesso!'
-        customIcon='success'
-      />
+      await EnterpriseService.createEnterprise(enterprisesInput)
+      setAllEnterprises([...allEnterprises, enterprisesInput])
+      GenericModal({
+        customText: 'Empreendimento criado com sucesso!',
+        customIcon: 'success',
+      })
     } catch {
-
-      <GenericModal
-        customTitle='Erro'
-        customText='Não foi possível concluir essa ação, tente novamente!'
-        customIcon='error'
-      />
+      GenericModal({
+        customTitle: 'Erro',
+        customText: 'Não foi possível concluir essa ação, tente novamente!',
+        customIcon: 'error',
+      })
     }
   }
 
   const handleUpdateEnterprise = async (updatedEnterprise: Enterprise) => {
     try {
-      await EnterpriseService.updateEnterprise(updatedEnterprise);
+      await EnterpriseService.updateEnterprise(updatedEnterprise)
 
-      const updatedEnterprises = allEnterprises.map(enterprise => {
+      const updatedEnterprises = allEnterprises.map((enterprise) => {
         if (enterprise.id === updatedEnterprise.id) {
           return updatedEnterprise
         }
-        return enterprise;
+        return enterprise
       })
 
-      setAllEnterprises(updatedEnterprises);
+      setAllEnterprises(updatedEnterprises)
 
-      <GenericModal
-        customText='Suas alterações foram salvas com sucesso!'
-        customIcon='success'
-      />
-
+      GenericModal({
+        customText: 'Suas alterações foram salvas com sucesso!',
+        customIcon: 'success',
+      })
     } catch {
-
-      <GenericModal
-        customTitle='Erro'
-        customText='Suas alterações não foram salvas, tente novamente!'
-        customIcon='error'
-      />
-
+      GenericModal({
+        customTitle: 'Erro',
+        customText: 'Suas alterações não foram salvas, tente novamente!',
+        customIcon: 'error',
+      })
     }
   }
 
@@ -99,9 +109,9 @@ export const EnterpriseProvider: React.FC<EnterpriseProviderProps> = ({ children
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
+        cancelButton: 'btn btn-danger',
       },
-      buttonsStyling: true
+      buttonsStyling: true,
     })
 
     swalWithBootstrapButtons
@@ -112,9 +122,9 @@ export const EnterpriseProvider: React.FC<EnterpriseProviderProps> = ({ children
         showCancelButton: true,
         confirmButtonText: 'Excluir',
         cancelButtonText: 'Cancelar',
-        reverseButtons: true
+        reverseButtons: true,
       })
-      .then(result => {
+      .then((result) => {
         if (result.isConfirmed) {
           EnterpriseService.deleteEnterprise(id)
             .then(() => {
@@ -123,26 +133,24 @@ export const EnterpriseProvider: React.FC<EnterpriseProviderProps> = ({ children
                   return enterprise
                 }
               })
-              setAllEnterprises(updatedEnterprises);
+              setAllEnterprises(updatedEnterprises)
 
-              < GenericModal
-                customText='Empreendimento excluido com sucesso!'
-                customIcon='success'
-              />
-
+              GenericModal({
+                customText: 'Empreendimento excluido com sucesso!',
+                customIcon: 'success',
+              })
             })
             .catch(() => {
-              <GenericModal
-                customTitle='Erro'
-                customText='Suas alterações não foram salvas, tente novamente!'
-                customIcon='error'
-              />
+              GenericModal({
+                customTitle: 'Erro',
+                customText:
+                  'Suas alterações não foram salvas, tente novamente!',
+                customIcon: 'error',
+              })
             })
-
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire('Cancelado!')
         }
-        return
       })
   }
 
@@ -155,7 +163,7 @@ export const EnterpriseProvider: React.FC<EnterpriseProviderProps> = ({ children
         handleSetEnterpriseToBeEdited,
         handleCreateEnterprise,
         handleDeleteEnterprise,
-        handleUpdateEnterprise
+        handleUpdateEnterprise,
       }}
     >
       {children}
@@ -163,7 +171,7 @@ export const EnterpriseProvider: React.FC<EnterpriseProviderProps> = ({ children
   )
 }
 
-export function useEnterprises () {
+export function useEnterprises() {
   const context = useContext(EnterprisesContext)
   return context
 }

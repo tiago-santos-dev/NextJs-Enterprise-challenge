@@ -2,31 +2,33 @@ import { api } from '@services/api'
 import { Enterprise } from '@typeDefs/index'
 
 type EnterpriseResponse = Omit<Enterprise, 'id' | 'riNumber'> & {
-  _id: string,
+  _id: string
   ri_number: string
 }
 
 const EnterpriseService = {
-
-  async createEnterprise (inputEnterprise: Enterprise): Promise<Enterprise> {
-    const { data } = await api.post('/enterprise', { inputEnterprise })
+  async createEnterprise(inputEnterprise: Enterprise): Promise<Enterprise> {
+    const { data } = await api.post('/enterprises', { inputEnterprise })
     return data
   },
 
-  async updateEnterprise (enterprise: Enterprise) {
-    await api.put('/analogie/', enterprise)
+  async updateEnterprise(enterprise: Enterprise) {
+    await api.put('/enterprises/', enterprise)
   },
 
-  async deleteEnterprise (id: string) {
-    await api.delete(`/enterprise/${id}`)
+  async deleteEnterprise(id: string) {
+    await api.delete(`/enterprises/${id}`)
   },
 
-  async getAllEnterprises (): Promise<Enterprise[]> {
+  async getAllEnterprises(): Promise<Enterprise[]> {
     const { data } = await api.get<EnterpriseResponse[]>('/enterprises')
-    return [...data.map(
-      ({ _id, ri_number, ...item }) => (
-        { ...item, id: _id, riNumber: ri_number }
-      ))]
+    return [
+      ...data.map(({ _id, ri_number, ...item }) => ({
+        ...item,
+        id: _id,
+        riNumber: ri_number,
+      })),
+    ]
   },
 }
 
