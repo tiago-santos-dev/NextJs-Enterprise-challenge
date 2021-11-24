@@ -1,5 +1,6 @@
 import Button from '@components/UI/Button'
 import Input from '@components/UI/Input'
+import Select from '@components/UI/Select'
 import {
   AdressContainer,
   AdressText,
@@ -13,9 +14,17 @@ const Form: React.FC = function () {
     <Container>
       <InputsContainer>
         <Title>Informações</Title>
-        <Input name="type" />
-        <Input name="type" placeholder="Nome" />
-        <Input name="type" />
+        <Select
+          name="type"
+          options={[
+            'Breve Lançamento',
+            ' Lançamento',
+            'Em obras',
+            'Pronto pra morar ',
+          ]}
+        />
+        <Input name="type" placeholder="Nome do Empreendimento" />
+        <Select name="type" options={['Residencial', 'Comercial']} />
         <Input name="type" placeholder="CEP" />
         <AdressContainer>
           <AdressText>Rua Doutor Messuti</AdressText>
