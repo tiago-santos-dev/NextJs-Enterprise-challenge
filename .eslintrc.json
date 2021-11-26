@@ -34,7 +34,9 @@
     "vars-on-top": "off",
     "array-callback-return": "off",
     "consistent-return": "off",
+    "no-param-reassign": "off",
     "react/jsx-no-constructed-context-values": "off",
+    "react/jsx-props-no-spreading": "off",
     "no-var": 0,
     "func-names": [
       "error",
@@ -56,12 +58,6 @@
       0,
       {
         "properties": "never"
-      }
-    ],
-    "react/jsx-props-no-spreading": [
-      "error",
-      {
-        "custom": "ignore"
       }
     ],
     "no-use-before-define": "off",

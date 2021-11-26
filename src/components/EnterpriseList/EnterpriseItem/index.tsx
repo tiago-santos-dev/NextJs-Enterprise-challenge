@@ -1,8 +1,8 @@
 import Tag from '@components/UI/Tag'
-import { useEnterprises } from '@hooks/useEnterprise'
-import { Enterprise } from '@typeDefs/index'
+import { Enterprise, PorposeEnum, StatusEnum } from '@typeDefs/index'
 import router from 'next/router'
 import { FiEdit2, FiTrash } from 'react-icons/fi'
+import { useEnterprises } from '@hooks/useEnterprise'
 import {
   Container,
   EnterpriseDetailsContainer,
@@ -45,8 +45,8 @@ const EnterpriseItem: React.FC<EnterpriseItemProps> = function ({
         </EnterpriseAdress>
       </EnterpriseDetailsContainer>
       <TagsContainer>
-        <Tag text={enterpriseItem.status.toString()} />
-        <Tag text={enterpriseItem.purpose.toString()} />
+        <Tag text={StatusEnum[enterpriseItem.status]} />
+        <Tag text={PorposeEnum[enterpriseItem.purpose]} />
       </TagsContainer>
     </Container>
   )

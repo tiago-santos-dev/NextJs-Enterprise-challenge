@@ -1,16 +1,22 @@
 import styled from 'styled-components'
 
-export const Container = styled.form`
+export const Container = styled.div`
   width: 80%;
   height: 48rem;
   margin: 2rem 0 0 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+
+  form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
 `
 
-export const InputsContainer = styled.div`
+export const FormContainer = styled.div`
   width: 100%;
   height: 43.2rem;
   background-color: var(--white);

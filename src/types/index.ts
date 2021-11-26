@@ -1,16 +1,16 @@
 export enum PorposeEnum {
-  'HOME',
-  'BUSINESS',
+  HOME = 'Residencial',
+  BUSINESS = 'Comercial',
 }
 
 export enum StatusEnum {
-  'RELEASE',
-  'SHORT RELEASE',
-  'IN_WORKS',
-  'READY',
+  RELEASE = 'Lançamento',
+  SHORT_RELEASE = 'Breve lançamento',
+  IN_WORKS = 'Em Obras',
+  READY = 'Pronto pra morar',
 }
 
-interface Adress {
+export interface Adress {
   district: string
   city: string
   street: string
@@ -25,4 +25,9 @@ export interface Enterprise {
   purpose: PorposeEnum
   riNumber: string
   address: Adress
+}
+
+export interface OptionsProps {
+  label: string
+  value: string
 }
