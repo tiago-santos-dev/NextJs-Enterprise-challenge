@@ -14,11 +14,8 @@ export const Container = styled.div`
   }
   input {
     font-weight: 400;
+    width: 100%;
+    background: transparent;
+    border: 0;
   }
-`
-
-export const Input = styled.input`
-  width: 100%;
-  background: transparent;
-  border: 0;
 `

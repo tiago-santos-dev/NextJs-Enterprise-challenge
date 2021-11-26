@@ -1,9 +1,10 @@
 import Button from '@components/UI/Button'
 import Input from '@components/UI/Input'
 import Select from '@components/UI/Select'
-import { OptionsProps } from '@typeDefs/index'
+import { EnterpriseService } from '@services/enterprises'
+import { Adress, OptionsProps } from '@typeDefs/index'
 import { Form } from '@unform/web'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import {
   AdressContainer,
   AdressText,
@@ -26,11 +27,33 @@ const EnterpriseForm: React.FC = function () {
     { label: 'Residencial', value: 'HOME' },
     { label: 'Comercial', value: 'BUSINESS' }]
 
-  // const [cep, setCep] = useState('');
-  // const [adress, setAdress] = useState<Adress>();
+  const [cep, setCep] = useState('');
+  const [adress, setAdress] = useState<Adress>();
 
   const handleFormSubmit = data => {
     // console.log({ data })
+  }
+
+  const handleConsultZipCode = async () => {
+
+    let zipCode = cep.replace('/-/g', '')
+
+    try {
+      const adressResponse = await EnterpriseService.consultZipCode(zipCode);
+
+      if (!adressResponse.erro) {
+        setAdress({
+          cep,
+          city: adressResponse.localidade,
+          district: adressResponse.bairro,
+          number: 1,
+          state: adressResponse.uf,
+          street: adressResponse.logradouro
+        })
+      }
+    } catch (error) {
+      // console.error(error)
+    }
   }
 
   return (
@@ -42,16 +65,39 @@ const EnterpriseForm: React.FC = function () {
             name="status"
             options={statusOptions}
           />
-          <Input name="name" placeholder="Nome do Empreendimento" />
+          <Input
+            name="name"
+            placeholder="Nome do Empreendimento"
+          />
           <Select name="porpose" options={porposeOptions} />
-          <Input name="cep" placeholder="CEP" />
+          <Input
+            name="cep"
+            mask={"99999-999"}
+            placeholder="CEP"
+            onChange={e => setCep(e.target.value)}
+          />
           <AdressContainer>
-            <AdressText>Rua Doutor Messuti</AdressText>
-            <AdressText>Vila Bastos</AdressText>
-            <AdressText>Santo André</AdressText>
-            <AdressText>SP</AdressText>
+            {
+              adress
+                ? <>
+                  <AdressText>{adress.street}</AdressText>
+                  <AdressText>{adress.district}</AdressText>
+                  <AdressText>{adress.city}</AdressText>
+                  <AdressText>{adress.state}</AdressText>
+                </>
+                : <Button
+                  text='Consultar CEP'
+                  type='button'
+                  onClick={handleConsultZipCode}
+                />
+            }
           </AdressContainer>
-          <Input name="number" placeholder="Número" />
+          {
+            adress && <Input
+              name="number"
+              placeholder="Número"
+            />
+          }
         </FormContainer>
         <Button
           type='submit'

@@ -1,14 +1,22 @@
 import { InputHTMLAttributes, useEffect, useRef } from 'react'
 import { IconBaseProps } from 'react-icons/lib'
-import { Container, Input as CustomInput } from './styles'
+import { Container } from './styles'
 import { useField } from '@unform/core'
+import InputMask from "react-input-mask";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string
   icon?: React.ComponentType<IconBaseProps>
+  mask?: string
 }
 
-const Input: React.FC<InputProps> = function ({ name, icon: Icon, ...rest }) {
-  const { fieldName, registerField } = useField(name)
+const Input: React.FC<InputProps> = function ({
+  name,
+  icon: Icon,
+  mask = '',
+  onChange,
+  ...rest
+}) {
+  const { fieldName, registerField, defaultValue } = useField(name)
   const inputRef = useRef();
 
   useEffect(() => {
@@ -30,8 +38,10 @@ const Input: React.FC<InputProps> = function ({ name, icon: Icon, ...rest }) {
   return (
     <Container>
       {Icon && <Icon />}
-      <CustomInput
-        name={name}
+      <InputMask
+        mask={mask}
+        onChange={onChange}
+        defaultValue={defaultValue}
         ref={inputRef}
         {...rest}
       />
