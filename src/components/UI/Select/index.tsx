@@ -1,7 +1,8 @@
-import { OptionsProps } from '@typeDefs/index';
-import { useField } from '@unform/core';
+import { OptionsProps } from '@typeDefs/index'
+import { useField } from '@unform/core'
 import { SelectHTMLAttributes, useEffect, useRef } from 'react'
 import { Container } from './styles'
+
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   name: string
   options: OptionsProps[]
@@ -9,19 +10,17 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 var Select: React.FC<SelectProps> = function ({ name, options, ...rest }) {
   const { fieldName, registerField } = useField(name)
-  const selectRef = useRef();
+  const selectRef = useRef()
 
   useEffect(() => {
     registerField({
       name: fieldName,
       ref: selectRef,
-      getValue: ref => {
-        return ref.current.value
-      },
+      getValue: (ref) => ref.current.value,
       setValue: (ref, value) => {
         ref.current.value = value
       },
-      clearValue: ref => {
+      clearValue: (ref) => {
         ref.current.value = ''
       },
     })
@@ -33,7 +32,7 @@ var Select: React.FC<SelectProps> = function ({ name, options, ...rest }) {
         {options.map((item) => [
           <option key={item.label} value={item.value}>
             {item.label}
-          </option>
+          </option>,
         ])}
       </select>
     </Container>
