@@ -20,7 +20,8 @@ interface EnterpriseItemProps {
 const EnterpriseItem: React.FC<EnterpriseItemProps> = function ({
   enterpriseItem,
 }) {
-  const { handleDeleteEnterprise } = useEnterprises()
+  const { handleDeleteEnterprise, handleSetEnterpriseToBeEdited } =
+    useEnterprises()
 
   return (
     <Container>
@@ -28,7 +29,12 @@ const EnterpriseItem: React.FC<EnterpriseItemProps> = function ({
         <Content>
           <EnterpriseName>{enterpriseItem.name}</EnterpriseName>
           <ActionButtonsContainer>
-            <Button onClick={() => router.push('/edit-enterprise')}>
+            <Button
+              onClick={() => {
+                handleSetEnterpriseToBeEdited(enterpriseItem)
+                router.push('/edit-enterprise')
+              }}
+            >
               <FiEdit2 />
             </Button>
             <Button onClick={() => handleDeleteEnterprise(enterpriseItem.id)}>

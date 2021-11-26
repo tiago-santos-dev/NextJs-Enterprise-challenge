@@ -17,6 +17,7 @@ interface EnterpriseContextData {
   loading: boolean
   allEnterprises: Enterprise[]
   enterpriseToBeEdited: Enterprise
+  getEnterprises: () => void
   handleSetEnterpriseToBeEdited: (enterprise: Enterprise) => void
   handleCreateEnterprise: (enterprise: Enterprise) => Promise<void>
   handleUpdateEnterprise: (enterprise: Enterprise) => Promise<void>
@@ -64,8 +65,10 @@ export var EnterpriseProvider: React.FC<EnterpriseProviderProps> = function ({
 
   const handleCreateEnterprise = async (enterprisesInput: Enterprise) => {
     try {
-      await EnterpriseService.createEnterprise(enterprisesInput)
-      setAllEnterprises([...allEnterprises, enterprisesInput])
+      const enterprise = await EnterpriseService.createEnterprise(
+        enterprisesInput
+      )
+      setAllEnterprises([...allEnterprises, enterprise])
       GenericModal({
         customText: 'Empreendimento criado com sucesso!',
         customIcon: 'success',
@@ -159,6 +162,7 @@ export var EnterpriseProvider: React.FC<EnterpriseProviderProps> = function ({
       value={{
         loading,
         allEnterprises,
+        getEnterprises,
         enterpriseToBeEdited,
         handleSetEnterpriseToBeEdited,
         handleCreateEnterprise,

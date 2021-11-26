@@ -31,79 +31,50 @@
       }
     },
     {
-      "_id": "PA03",
       "name": "Sirius Campinas",
-      "status": "RELEASE",
-      "purpose": "HOME",
-      "ri_number": "987654",
-      "address": {
-        "street": "Av. Aquidabã",
-        "number": "280",
-        "district": "Zona Heteleira Aquidabã",
-        "city": "Campinas",
-        "state": "SP",
-        "cep": "60000000"
-      }
-    },
-    {
-      "status": "SHORT_RELEASE",
-      "name": "Padaria",
-      "purpose": "HOME",
-      "number": "250",
-      "address": {
-        "cep": "01001000",
-        "city": "São Paulo",
-        "district": "Sé",
-        "number": "250",
-        "state": "SP",
-        "street": "Praça da Sé"
-      },
-      "_id": "6CDfqvn"
-    },
-    {
-      "status": "SHORT_RELEASE",
-      "name": "Supermercado",
-      "purpose": "HOME",
-      "number": "260",
-      "address": {
-        "cep": "01001000",
-        "city": "São Paulo",
-        "district": "Sé",
-        "number": "260",
-        "state": "SP",
-        "street": "Praça da Sé"
-      },
-      "_id": "IUWDm_C"
-    },
-    {
       "status": "IN_WORKS",
-      "name": "Consultório",
       "purpose": "BUSINESS",
-      "number": "300",
+      "address": {
+        "cep": "04843425",
+        "city": "São Paulo",
+        "district": "Parque São José",
+        "number": "325",
+        "state": "SP",
+        "street": "Viela 16"
+      },
+      "_id": "PA03"
+    },
+    {
+      "name": "teste",
+      "status": "SHORT_RELEASE",
+      "purpose": "BUSINESS",
       "address": {
         "cep": "01001000",
         "city": "São Paulo",
         "district": "Sé",
-        "number": "300",
+        "number": "700",
         "state": "SP",
         "street": "Praça da Sé"
       },
-      "_id": "xfo4YzS"
+      "id": "PA04",
+      "riNumber": "123456",
+      "_id": "PA04"
     },
     {
-      "status": "READY",
-      "name": "Casa de Pedro",
-      "purpose": "HOME",
-      "number": "56",
+      "id": "PA05",
+      "name": "teste 01",
+      "status": "SHORT_RELEASE",
+      "purpose": "BUSINESS",
+      "riNumber": "123456",
       "address": {
-        "cep": "08226021",
+        "cep": "01001000",
         "city": "São Paulo",
-        "district": "Cidade Antônio Estevão de Carvalho",
-        "number": "56",
+        "district": "Sé",
+        "number": "500",
         "state": "SP",
-        "street": "Rua 18 de Abril"
+        "street": "Praça da Sé"
       },
-      "_id": "XJEHrkC"
+      "_id": "PA05"
     }
   ]
 }

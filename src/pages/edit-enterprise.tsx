@@ -10,7 +10,7 @@ const CreateEnterprise = function () {
       </Head>
       <Container>
         <Content>
-          <Form />
+          <Form editMode />
         </Content>
       </Container>
     </>
