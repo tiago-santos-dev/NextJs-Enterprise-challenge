@@ -1,8 +1,9 @@
 import Button from '@components/UI/Button'
 import Input from '@components/UI/Input'
 import Select from '@components/UI/Select'
+import { useEnterprises } from '@hooks/useEnterprise'
 import { EnterpriseService } from '@services/enterprises'
-import { Adress, OptionsProps } from '@typeDefs/index'
+import { Address, OptionsProps } from '@typeDefs/index'
 import { Form } from '@unform/web'
 import { useRef, useState } from 'react'
 import {
@@ -15,6 +16,9 @@ import {
 
 const EnterpriseForm: React.FC = function () {
   const formRef = useRef()
+  const [cep, setCep] = useState('')
+  const [address, setAddress] = useState<Address>()
+  const { handleCreateEnterprise } = useEnterprises()
 
   const statusOptions: OptionsProps[] = [
     { label: 'Breve Lançamento', value: 'SHORT_RELEASE' },
@@ -23,32 +27,43 @@ const EnterpriseForm: React.FC = function () {
     { label: 'Pronto pra morar ', value: 'READY' },
   ]
 
-  const porposeOptions: OptionsProps[] = [
+  const purposeOptions: OptionsProps[] = [
     { label: 'Residencial', value: 'HOME' },
-    { label: 'Comercial', value: 'BUSINESS' }]
+    { label: 'Comercial', value: 'BUSINESS' },
+  ]
 
-  const [cep, setCep] = useState('');
-  const [adress, setAdress] = useState<Adress>();
-
-  const handleFormSubmit = data => {
-    // console.log({ data })
+  const handleFormSubmit = async (data, { reset }) => {
+    delete data.cep
+    try {
+      if (address) {
+        await handleCreateEnterprise({
+          ...data,
+          address: {
+            ...address,
+            cep,
+            number: data.number,
+          },
+        })
+        reset()
+      }
+    } catch (error) {
+      // console.error(error)
+    }
   }
-
   const handleConsultZipCode = async () => {
-
-    let zipCode = cep.replace('/-/g', '')
+    const zipCode = cep.replace('/-/g', '')
 
     try {
-      const adressResponse = await EnterpriseService.consultZipCode(zipCode);
+      const adressResponse = await EnterpriseService.consultZipCode(zipCode)
 
-      if (!adressResponse.erro) {
-        setAdress({
+      if (adressResponse?.erro !== true) {
+        setAddress({
           cep,
           city: adressResponse.localidade,
           district: adressResponse.bairro,
-          number: 1,
+          number: 0,
           state: adressResponse.uf,
-          street: adressResponse.logradouro
+          street: adressResponse.logradouro,
         })
       }
     } catch (error) {
@@ -61,50 +76,37 @@ const EnterpriseForm: React.FC = function () {
       <Form ref={formRef} onSubmit={handleFormSubmit}>
         <FormContainer>
           <Title>Informações</Title>
-          <Select
-            name="status"
-            options={statusOptions}
-          />
-          <Input
-            name="name"
-            placeholder="Nome do Empreendimento"
-          />
-          <Select name="porpose" options={porposeOptions} />
+          <Select name="status" options={statusOptions} />
+          <Input name="name" required placeholder="Nome do Empreendimento" />
+          <Select name="purpose" options={purposeOptions} />
           <Input
             name="cep"
-            mask={"99999-999"}
+            required
             placeholder="CEP"
-            onChange={e => setCep(e.target.value)}
+            maxLength={8}
+            onChange={(e) => setCep(e.target.value)}
           />
           <AdressContainer>
-            {
-              adress
-                ? <>
-                  <AdressText>{adress.street}</AdressText>
-                  <AdressText>{adress.district}</AdressText>
-                  <AdressText>{adress.city}</AdressText>
-                  <AdressText>{adress.state}</AdressText>
-                </>
-                : <Button
-                  text='Consultar CEP'
-                  type='button'
-                  onClick={handleConsultZipCode}
-                />
-            }
+            {address ? (
+              <>
+                <AdressText>{address.street}</AdressText>
+                <AdressText>{address.district}</AdressText>
+                <AdressText>{address.city}</AdressText>
+                <AdressText>{address.state}</AdressText>
+              </>
+            ) : (
+              <Button
+                text="Consultar CEP"
+                type="button"
+                onClick={handleConsultZipCode}
+              />
+            )}
           </AdressContainer>
-          {
-            adress && <Input
-              name="number"
-              placeholder="Número"
-            />
-          }
+          {address && <Input name="number" required placeholder="Número" />}
         </FormContainer>
-        <Button
-          type='submit'
-          text="Cadastrar"
-        />
+        <Button type="submit" text="Cadastrar" />
       </Form>
-    </Container >
+    </Container>
   )
 }
 

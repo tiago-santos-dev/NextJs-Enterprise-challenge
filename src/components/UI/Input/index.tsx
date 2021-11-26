@@ -1,35 +1,31 @@
 import { InputHTMLAttributes, useEffect, useRef } from 'react'
 import { IconBaseProps } from 'react-icons/lib'
-import { Container } from './styles'
 import { useField } from '@unform/core'
-import InputMask from "react-input-mask";
+import { Container } from './styles'
+
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string
   icon?: React.ComponentType<IconBaseProps>
-  mask?: string
 }
 
 const Input: React.FC<InputProps> = function ({
   name,
   icon: Icon,
-  mask = '',
   onChange,
   ...rest
 }) {
   const { fieldName, registerField, defaultValue } = useField(name)
-  const inputRef = useRef();
+  const inputRef = useRef()
 
   useEffect(() => {
     registerField({
       name: fieldName,
       ref: inputRef,
-      getValue: ref => {
-        return ref.current.value
-      },
+      getValue: (ref) => ref.current.value,
       setValue: (ref, value) => {
         ref.current.value = value
       },
-      clearValue: ref => {
+      clearValue: (ref) => {
         ref.current.value = ''
       },
     })
@@ -38,8 +34,8 @@ const Input: React.FC<InputProps> = function ({
   return (
     <Container>
       {Icon && <Icon />}
-      <InputMask
-        mask={mask}
+      <input
+        id={fieldName}
         onChange={onChange}
         defaultValue={defaultValue}
         ref={inputRef}

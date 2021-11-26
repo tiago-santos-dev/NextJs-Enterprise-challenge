@@ -44,6 +44,66 @@
         "state": "SP",
         "cep": "60000000"
       }
+    },
+    {
+      "status": "SHORT_RELEASE",
+      "name": "Padaria",
+      "purpose": "HOME",
+      "number": "250",
+      "address": {
+        "cep": "01001000",
+        "city": "São Paulo",
+        "district": "Sé",
+        "number": "250",
+        "state": "SP",
+        "street": "Praça da Sé"
+      },
+      "_id": "6CDfqvn"
+    },
+    {
+      "status": "SHORT_RELEASE",
+      "name": "Supermercado",
+      "purpose": "HOME",
+      "number": "260",
+      "address": {
+        "cep": "01001000",
+        "city": "São Paulo",
+        "district": "Sé",
+        "number": "260",
+        "state": "SP",
+        "street": "Praça da Sé"
+      },
+      "_id": "IUWDm_C"
+    },
+    {
+      "status": "IN_WORKS",
+      "name": "Consultório",
+      "purpose": "BUSINESS",
+      "number": "300",
+      "address": {
+        "cep": "01001000",
+        "city": "São Paulo",
+        "district": "Sé",
+        "number": "300",
+        "state": "SP",
+        "street": "Praça da Sé"
+      },
+      "_id": "xfo4YzS"
+    },
+    {
+      "status": "READY",
+      "name": "Casa de Pedro",
+      "purpose": "HOME",
+      "number": "56",
+      "address": {
+        "cep": "08226021",
+        "city": "São Paulo",
+        "district": "Cidade Antônio Estevão de Carvalho",
+        "number": "56",
+        "state": "SP",
+        "street": "Rua 18 de Abril"
+      },
+      "_id": "XJEHrkC"
     }
   ]
 }

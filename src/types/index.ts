@@ -1,4 +1,4 @@
-export enum PorposeEnum {
+export enum PurposeEnum {
   HOME = 'Residencial',
   BUSINESS = 'Comercial',
 }
@@ -10,7 +10,7 @@ export enum StatusEnum {
   READY = 'Pronto pra morar',
 }
 
-export interface Adress {
+export interface Address {
   district: string
   city: string
   street: string
@@ -22,9 +22,9 @@ export interface Enterprise {
   id: string
   name: string
   status: StatusEnum
-  purpose: PorposeEnum
+  purpose: PurposeEnum
   riNumber: string
-  address: Adress
+  address: Address
 }
 
 export interface OptionsProps {
