@@ -8,13 +8,15 @@ type EnterpriseResponse = Omit<Enterprise, 'id' | 'riNumber'> & {
 
 const EnterpriseService = {
   async createEnterprise(inputEnterprise: Enterprise): Promise<Enterprise> {
-    const { id, riNumber } = inputEnterprise
-    delete inputEnterprise.id
-    delete inputEnterprise.riNumber
     const { data } = await api.post('/enterprises', {
-      ...inputEnterprise,
-      _id: id,
-      ri_number: riNumber,
+      _id: inputEnterprise.id,
+      name: inputEnterprise.name,
+      status: inputEnterprise.status,
+      purpose: inputEnterprise.purpose,
+      ri_number: inputEnterprise.riNumber,
+      address: {
+        ...inputEnterprise.address,
+      },
     })
 
     const { _id: enterpriseId } = data
@@ -32,8 +34,14 @@ const EnterpriseService = {
 
   async updateEnterprise(enterprise: Enterprise) {
     await api.put(`/enterprises/${enterprise.id}`, {
-      ...enterprise,
       _id: enterprise.id,
+      name: enterprise.name,
+      status: enterprise.status,
+      purpose: enterprise.purpose,
+      ri_number: enterprise.riNumber,
+      address: {
+        ...enterprise.address,
+      },
     })
   },
 
@@ -41,6 +49,18 @@ const EnterpriseService = {
     await api.delete(`/enterprises/${id}`)
   },
 
+  async getEnterprises(page = 1): Promise<Enterprise[]> {
+    const { data } = await api.get<EnterpriseResponse[]>(
+      `/enterprises?_page=${page}`
+    )
+    return [
+      ...data.map(({ _id, ri_number, ...item }) => ({
+        ...item,
+        id: _id,
+        riNumber: ri_number,
+      })),
+    ]
+  },
   async getAllEnterprises(): Promise<Enterprise[]> {
     const { data } = await api.get<EnterpriseResponse[]>('/enterprises')
     return [

@@ -4,7 +4,7 @@ import EnterpriseItem from './EnterpriseItem'
 import { Container } from './styles'
 
 const EnterpriseList: React.FC = function () {
-  const { allEnterprises } = useEnterprises()
+  const { allEnterprises, getEnterprises } = useEnterprises()
 
   return (
     <Container>
@@ -12,7 +12,7 @@ const EnterpriseList: React.FC = function () {
         <EnterpriseItem key={item.id} enterpriseItem={item} />
       ))}
 
-      <Button text="Carregar mais" />
+      <Button text="Carregar mais" onClick={() => getEnterprises()} />
     </Container>
   )
 }

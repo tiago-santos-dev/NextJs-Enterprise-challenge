@@ -17,7 +17,7 @@ interface EnterpriseContextData {
   loading: boolean
   allEnterprises: Enterprise[]
   enterpriseToBeEdited: Enterprise
-  getEnterprises: () => void
+  getEnterprises: (page?: number) => void
   handleSetEnterpriseToBeEdited: (enterprise: Enterprise) => void
   handleCreateEnterprise: (enterprise: Enterprise) => Promise<void>
   handleUpdateEnterprise: (enterprise: Enterprise) => Promise<void>
@@ -34,6 +34,7 @@ export var EnterpriseProvider: React.FC<EnterpriseProviderProps> = function ({
   const [allEnterprises, setAllEnterprises] = useState<Enterprise[]>([])
   const [enterpriseToBeEdited, setEnterpriseToBeEdited] = useState<Enterprise>()
   const [loading, setLoading] = useState(false)
+  const [currentEnterprisePage, setCurrentEnterprisePage] = useState(1)
 
   const GenericModal = ({
     customIcon,
@@ -52,15 +53,39 @@ export var EnterpriseProvider: React.FC<EnterpriseProviderProps> = function ({
     setEnterpriseToBeEdited(enterprise)
   }
 
-  const getEnterprises = async () => {
+  const getEnterprises = async (page?: number) => {
     setLoading(true)
-    const EnterprisesResponse = await EnterpriseService.getAllEnterprises()
-    setAllEnterprises(EnterprisesResponse)
+
+    try {
+      const EnterprisesResponse = await EnterpriseService.getEnterprises(
+        page || currentEnterprisePage + 1
+      )
+
+      if (EnterprisesResponse.length !== 0) {
+        if (page) setAllEnterprises(EnterprisesResponse)
+        else {
+          setAllEnterprises([...allEnterprises, ...EnterprisesResponse])
+          setCurrentEnterprisePage(currentEnterprisePage + 1)
+        }
+      } else {
+        const EnterprisesResponse = await EnterpriseService.getAllEnterprises()
+        setAllEnterprises(EnterprisesResponse)
+      }
+    } catch {
+      GenericModal({
+        customTitle: 'Erro',
+        customText:
+          'Não foi possível buscar os empreendimentos cadastrados, tente novamente!',
+        customIcon: 'error',
+      })
+    }
+
     setLoading(false)
   }
 
   useEffect(() => {
-    getEnterprises()
+    getEnterprises(1)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleCreateEnterprise = async (enterprisesInput: Enterprise) => {
