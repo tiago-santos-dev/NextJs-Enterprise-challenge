@@ -4,7 +4,7 @@ import { useField } from '@unform/core'
 import { Container } from './styles'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  name: string
+  name?: string
   icon?: React.ComponentType<IconBaseProps>
 }
 
@@ -14,10 +14,11 @@ const Input: React.FC<InputProps> = function ({
   onChange,
   ...rest
 }) {
-  const { fieldName, registerField, defaultValue } = useField(name)
+  const { fieldName, registerField } = useField(name);
   const inputRef = useRef()
 
   useEffect(() => {
+
     registerField({
       name: fieldName,
       ref: inputRef,
@@ -35,9 +36,7 @@ const Input: React.FC<InputProps> = function ({
     <Container>
       {Icon && <Icon />}
       <input
-        id={fieldName}
         onChange={onChange}
-        defaultValue={defaultValue}
         ref={inputRef}
         {...rest}
       />

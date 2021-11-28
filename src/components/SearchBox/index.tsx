@@ -1,9 +1,14 @@
+import Input from '@components/UI/Input'
+import { Form } from '@unform/web'
+import { FiSearch } from 'react-icons/fi'
 import { Container } from './styles'
 
-const SearchBox: React.FC = function () {
+const SearchBox: React.FC = () => {
   return (
     <Container>
-      {/* <Input name='' type="text" placeholder="Buscar" icon={FiSearch} /> */}
+      <Form onSubmit={() => { }}>
+        <Input name='search' type="text" placeholder="Buscar" icon={FiSearch} />
+      </Form>
     </Container>
   )
 }
